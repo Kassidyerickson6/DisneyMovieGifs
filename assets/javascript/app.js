@@ -1,33 +1,37 @@
 // Array containing the different Disney movies
-var topics = ["Cinderella", "Beauty and the Beast", "The Little Mermaid", "Mulan", "Brave", "Alladin", "Tangled", "Toy Story", "Dumbo", "Peter Pan", "Alice in Wonderland", "Lion King"];
+var topics = ["Cinderella", "Beauty and the Beast", "The Little Mermaid", "Mulan", "Alladin", "Tangled", "Toy Story", "Dumbo", "Peter Pan", "Alice in Wonderland", "Lion King"];
 // variable for buttons
 var button;
 // user's input for additional disney movies
 var userInput = "";
 
-// function to create new buttons from the topics array
+// function to create new buttons with gifs
 var buttonGenerator = function (){
-    // the previous div elements are emptied 
+    // empties previous divs 
      $("#disneyButtons").empty();
-    // loops through the array and creates buttons
+    // loops through the array then creates newbuttons
     for(i = 0; i < topics.length; i++) {
-        button = $("<button type=" + "button" + ">" + topics[i] + "</button>").addClass("btn btn-warning").attr("data",topics[i]);
+        button = $("<button type=" + "button" + ">" + topics[i] + "</button>").addClass("btn btn-info").attr("data",topics[i]);
         $("#disneyButtons").append(button);
     };
 }
 
+// This is the on-click function of the button, which will generate still gifs on the page
 $("#disneyButtons").on("click", ".btn", function(){
+        // this vaiable gathers the data from the button which is clicked
         var movie = $(this).attr("data");
+        // this is the URL for giphy.com with the API key attached
         var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + movie + "&api_key=dc6zaTOxFJmzC&limit=10";
 
 
-
+        // AJAX call that GETs the data
         $.ajax({
             url: queryURL,
             method: "GET" 
 
         })
 
+        // when "done", run the response function
         .done(function(response){
 
             console.log(response);
@@ -35,38 +39,41 @@ $("#disneyButtons").on("click", ".btn", function(){
             var results = response.data;
 
             for (var i = 0; i < results.length; i++) {
-                // a div is created to hold a gif of any topic
+                // this div is reated to hold a gif of any topic
                 var gifDiv = $("<div class ='item'>");
 
-                // stores the results
+                // where the results are stored
                 var rating= results[i].rating;
                 
-                // Under every gif, display its rating (PG, G, so on).
+                // this displays the gifs rating
                 var p = $("<p>").text("Rating: " + rating);
 
                 var movieImage = $("<img>");
 
 
-                // add a CSS style to create colored borders around the gifs
-               // var topicImage = $("<img>").addClass("orangeBorder");
-
-                // add states of animate and still which will be toggled 
+                // adds states of, which allows the user to make the gif animate or still
                 movieImage.attr("src", results[i].images.fixed_height_still.url);
+                movieImage.attr("data-still", results[i].images.fixed_height_still.url);
+                movieImage.attr("data-animate", results[i].images.fixed_height.url)
+                movieImage.attr("data-state", "still")
+                movieImage.addClass("gif_state");
                 
+
 				gifDiv.prepend(p);
-				gifDiv.prepend(movieImage);            
-                // new images will be placed at the beginning (top) of the containing gif area
+				gifDiv.prepend(movieImage);    
+
+                // places the new gifs onto the page
                 $("#gifs-appear-here").prepend(gifDiv);
             }
         })
   })
 
 
-// When the user clicks one of the still GIPHY images, and it animates. When the user clicks the gif again, it stops playing.
-$("#gifs-appear-here").on("click", ".gif", function(event){
+// on click function that allows the user to change the state of the gifs. (animate vs. still)
+$("#gifs-appear-here").on("click", ".gif_state", function(event){
     event.preventDefault();
     
-    // gets the current state of the clicked gif 
+    // checks the current state of the clicked gif 
     var state = $(this).attr("data-state");
     
     // according to the current state gifs toggle between animate and still 
@@ -80,17 +87,14 @@ $("#gifs-appear-here").on("click", ".gif", function(event){
 
 })
    
-
-// The form takes the value from the input box and adds it into the topics  array. The buttonGenerator function is called that takes each topic in the array remakes the buttons on the page.
-
-
+// value chosen by the user in the input box, is added to the array. The button generator then makes the new button.
 $(".submit").on("click", function(event){
     event.preventDefault();
 
     console.log("submit");
     // sets inputted value to newTopic 
     userInput = $("#disney-input").val();
-    // new topic is added to the topics array 
+    // new disney movie, chosen by the user is added to the topics array 
     topics.push(userInput);
     console.log(topics);
     // call the function that creates the new button
@@ -98,5 +102,5 @@ $(".submit").on("click", function(event){
 });
 
 
-
+// creates new buttons
 buttonGenerator();

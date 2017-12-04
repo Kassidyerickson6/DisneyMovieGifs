@@ -4,45 +4,46 @@
 <head>
     <meta charset="UTF-8">
     <title>Disney_Gifs</title>
-
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-		<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+		<!-- link to Bootstrap -->
+		
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 
 </head>
 
 
 <body>
-	<div class="container-fluid" id="wrap">
-		<!-- row for the title -->
+	<div class="container-fluid">
+		<!-- row for the title and Jumbotron-->
 		<div class="row">
 			<div class="col-md-12">
-				<h3><center> Disney Gifs </center></h3>
+				<div class="jumbotron">
+				  <center><h1>Disney Gifs!</h1></center>
+				</div>
 			</div>
 		</div>
 
 		<!-- row for the buttons -->
 		<div class="row">
 			<div class="col-md-12">
-				<!-- the buttons -->
+				<!-- the id for the buttons -->
 			    <div id="disneyButtons"></div>
 			</div>
 		</div>
 		<!-- row for the gifs -->
 		<div class="row">
 			<div class="col-md-9">
+				<!-- an id created for where the gifs will show on the html page. -->
 				<div id = "gifs-appear-here"></div>
 			</div>
 
 		<!-- row for user input -->
 			<div class="col-md-3">
+				<!-- form created for user input -->
 				<form id="disney-form">
-					<fieldset> <!-- not sure what this is -->
 				        <label for="disney-input"> Add a Disney movie </label><br>
 				        <input type="text" placeholder="Disney Movie" id="disney-input">
 						<!-- Submit button -->
 						<button type="submit" class="btn submit" data="submitBtn">Submit</button>
-					</fieldset>
 				</form>
 			</div>
 		</div>
@@ -52,7 +53,7 @@
 
 
 
- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
 <script src="https://code.jquery.com/jquery.js"></script>
